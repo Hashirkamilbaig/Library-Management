@@ -32,7 +32,7 @@ const RootLayout =({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${ibmPlexSans.className} ${bebasNeue.variable} antialiased`}
       >
         {children}
       </body>
