@@ -18,6 +18,8 @@ import { ZodType, z } from "zod"
 import Link from "next/link"
 import { FIELD_NAMES, FIELD_TYPES } from "@/constants"
 import ImageUpload from "./ImageUpload"
+import { toast } from "sonner"
+import { useRouter } from "next/navigation"
 
 
 
@@ -34,6 +36,7 @@ const AuthForm = <T extends FieldValues>({
   defaultValues, 
   onSubmit,
 }: Props<T>) => {
+  const router = useRouter();
   const isSignIn = type === "SIGN-IN";
   // 1. Define your form.
   const form: UseFormReturn<T> = useForm({
@@ -42,7 +45,17 @@ const AuthForm = <T extends FieldValues>({
   })
 
   // 2. Define a submit handler.
-  const handleSubmit: SubmitHandler<T> = async(data) => {};
+  const handleSubmit: SubmitHandler<T> = async(data) => {
+    const result = await onSubmit(data);
+
+    if(result.success){
+      toast("Success");
+      router.push("/");
+    }else{
+      toast("Something Went wrong");
+    }
+
+  };
 
   return (
     <div className="flex flex-col gap-4">
