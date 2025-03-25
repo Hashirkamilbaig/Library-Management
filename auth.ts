@@ -33,7 +33,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           name: user[0].fullName
         } as User;
       }
-    }) 
+    })
   ],
   pages: {
     signIn: "/sign-in",
