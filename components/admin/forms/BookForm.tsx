@@ -21,6 +21,7 @@ import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { bookSchema } from "@/lib/validations"
 import ImageUpload from "@/components/ImageUpload"
+import { Textarea } from "@/components/ui/textarea"
 
 
 
@@ -28,7 +29,7 @@ interface Props extends Partial<Book>{
   type?: 'create' | 'update'
 };
 
-const AuthForm = ({
+const BookForm = ({
   type, 
   ... book
 }: Props) => {
@@ -54,64 +55,157 @@ const AuthForm = ({
   });
 
   // 2. Define a submit handler.
-  const handleSubmit: SubmitHandler<T> = async(data) => {
-    const result = await onSubmit(data);
-
-    if(result.success){
-      toast("Success");
-      router.push("/");
-    }else{
-      toast("Something Went wrong");
-    }
-
-  };
+  const onSubmit = async(values: z.infer<typeof bookSchema>) => {};
 
   return (
-    <div className="flex flex-col gap-4">
-      <h1 className="text-2xl font-semibold text-white">
-        {isSignIn ? "Welcome back to Bookwise" : "Create your Library Account"}
-      </h1>
-        <p className="text-light-100">
-          {isSignIn 
-            ? "Access all the Books collections and stay updated" 
-            : "Please complete all the fields and upload a valid university ID to gain access"}
-        </p>
+    
       <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6 w-full">
-        {Object.keys(defaultValues).map((field) => (
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
-          key={field}
             control={form.control}
-            name={field as Path<T>}
+            name={"title"}
             render={({ field }) => (
-              <FormItem>
-                <FormLabel className="capatilize">{FIELD_NAMES[field.name as keyof typeof FIELD_NAMES]}</FormLabel>
+              <FormItem className="flex flex-col gap-1">
+                <FormLabel className="text-base font-normal text-dark-500">Book title</FormLabel>
                 <FormControl>
-                {field.name === "universityCard" ? (
-                      <ImageUpload onFileChange={field.onChange}/>
-                    ) : (
-                      <Input required type={FIELD_TYPES[field.name as keyof typeof FIELD_TYPES]} {...field} className="form-input"/>
-                    )}
+                      <Input required placeholder="Book title" {...field} className="book-form_input"/>
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-        ))}
+          <FormField
+            control={form.control}
+            name={"author"}
+            render={({ field }) => (
+              <FormItem className="flex flex-col gap-1">
+                <FormLabel className="text-base font-normal text-dark-500">Book author</FormLabel>
+                <FormControl>
+                      <Input required placeholder="Book author" {...field} className="book-form_input"/>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <Button type="submit" className="form-btn">{isSignIn ? "Sign In" : "Sign Up"}</Button>
+          <FormField
+            control={form.control}
+            name={"genre"}
+            render={({ field }) => (
+              <FormItem className="flex flex-col gap-1">
+                <FormLabel className="text-base font-normal text-dark-500">Book genre</FormLabel>
+                <FormControl>
+                      <Input required placeholder="Book genre" {...field} className="book-form_input"/>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name={"rating"}
+            render={({ field }) => (
+              <FormItem className="flex flex-col gap-1">
+                <FormLabel className="text-base font-normal text-dark-500">Book rating</FormLabel>
+                <FormControl>
+                      <Input type="number" min={1} max={5} placeholder="Book rating" {...field} className="book-form_input"/>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name={"Total copies"}
+            render={({ field }) => (
+              <FormItem className="flex flex-col gap-1">
+                <FormLabel className="text-base font-normal text-dark-500">Total copies</FormLabel>
+                <FormControl>
+                      <Input type="number" min={1} max={10000} placeholder="Total copies" {...field} className="book-form_input"/>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name={"coverUrl"}
+            render={({ field }) => (
+              <FormItem className="flex flex-col gap-1">
+                <FormLabel className="text-base font-normal text-dark-500">Book Image</FormLabel>
+                <FormControl>
+                      {/* File Upload */}
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name={"coverColor"}
+            render={({ field }) => (
+              <FormItem className="flex flex-col gap-1">
+                <FormLabel className="text-base font-normal text-dark-500">Primary Color</FormLabel>
+                <FormControl>
+                      {/* Color Picker */}
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name={"description"}
+            render={({ field }) => (
+              <FormItem className="flex flex-col gap-1">
+                <FormLabel className="text-base font-normal text-dark-500">Book description</FormLabel>
+                <FormControl>
+                      <Textarea placeholder="Book description" {...field} rows={10} className="book-form_input"/>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name={"videoUrl"}
+            render={({ field }) => (
+              <FormItem className="flex flex-col gap-1">
+                <FormLabel className="text-base font-normal text-dark-500">Book video</FormLabel>
+                <FormControl>
+                      {/* File Upload */}
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name={"summary"}
+            render={({ field }) => (
+              <FormItem className="flex flex-col gap-1">
+                <FormLabel className="text-base font-normal text-dark-500">Book summary</FormLabel>
+                <FormControl>
+                      <Textarea placeholder="Book summary" {...field} rows={5} className="book-form_input"/>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button type="submit" className="book-form_btn text-white">
+            Add book to library
+          </Button>
+
       </form>
     </Form>
-
-      <p className="text-center text-base font-medium">
-        {isSignIn ? "New to Bookwise? " : "Already have an account? "}
-
-        <Link href={isSignIn ? "/sign-up" : "/sign-in"} className="font-bold text-primary">
-          {isSignIn ? "Create an Account" : "Sign in"}
-        </Link>
-      </p>
-    </div>
   )
 }
 
-export default AuthForm
+export default BookForm
