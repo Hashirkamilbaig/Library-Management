@@ -118,7 +118,7 @@ const BookForm = ({
 
           <FormField
             control={form.control}
-            name={"Total copies"}
+            name={"totalCopies"}
             render={({ field }) => (
               <FormItem className="flex flex-col gap-1">
                 <FormLabel className="text-base font-normal text-dark-500">Total copies</FormLabel>

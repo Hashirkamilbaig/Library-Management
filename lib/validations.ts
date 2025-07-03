@@ -1,11 +1,29 @@
 import { z } from "zod";
 
 export const signUpSchema = z.object({
-  fullName: z.string().min(3),
-  email: z.string().email(),
-  universityId: z.coerce.number().optional(), // Now optional
-  universityCard: z.string().optional(), // Now optional
-  password: z.string().min(8),
+  fullName: z.string().min(3, { 
+    message: "Full name must be at least 3 characters." 
+  }),
+
+  email: z.string().email({ 
+    message: "Please enter a valid email address." 
+  }),
+
+  // Changed to a string for more flexibility (some IDs have letters/dashes).
+  // Made it required with a minimum length.
+  universityId: z.string().min(3, { 
+    message: "Please enter your university ID number." 
+  }),
+
+  // This is the file path string from the upload. It must be required.
+  // .min(1) is the best way to ensure a string is not empty.
+  universityCard: z.string().min(1, { 
+    message: "Please upload an image of your university ID card." 
+  }),
+
+  password: z.string().min(8, { 
+    message: "Password must be at least 8 characters long." 
+  }),
 });
 
 export const signInSchema = z.object({

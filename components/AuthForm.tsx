@@ -67,19 +67,23 @@ const AuthForm = <T extends FieldValues>({
             ? "Access all the Books collections and stay updated" 
             : "Please complete all the fields and upload a valid university ID to gain access"}
         </p>
-      <Form {...form}>
+        <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6 w-full">
-        {Object.keys(defaultValues).map((field) => (
+        {Object.keys(defaultValues).map((fieldName) => (
           <FormField
-          key={field}
+            key={fieldName}
             control={form.control}
-            name={field as Path<T>}
-            render={({ field }) => (
+            name={fieldName as Path<T>}
+            render={({ field }) => ( // 'field' contains { onChange, onBlur, value, name, ref }
               <FormItem>
                 <FormLabel className="capatilize">{FIELD_NAMES[field.name as keyof typeof FIELD_NAMES]}</FormLabel>
                 <FormControl>
                 {field.name === "universityCard" ? (
-                      <ImageUpload onFileChange={field.onChange}/>
+                      // PASS THE VALUE FROM THE FORM TO THE COMPONENT
+                      <ImageUpload 
+                        onFileChange={field.onChange} 
+                        value={field.value} 
+                      />
                     ) : (
                       <Input required type={FIELD_TYPES[field.name as keyof typeof FIELD_TYPES]} {...field} className="form-input"/>
                     )}
