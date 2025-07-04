@@ -20,8 +20,9 @@ import { FIELD_NAMES, FIELD_TYPES } from "@/constants"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { bookSchema } from "@/lib/validations"
-import ImageUpload from "@/components/ImageUpload"
+import ImageUpload from "@/components/FileUpload"
 import { Textarea } from "@/components/ui/textarea"
+import FileUpload from "@/components/FileUpload"
 
 
 
@@ -137,7 +138,15 @@ const BookForm = ({
               <FormItem className="flex flex-col gap-1">
                 <FormLabel className="text-base font-normal text-dark-500">Book Image</FormLabel>
                 <FormControl>
-                      {/* File Upload */}
+                  <FileUpload 
+                    onFileChange={field.onChange} 
+                    value={field.value} 
+                    type="image"
+                    accept="image/png, image/jpeg, image/webp"
+                    placeholder="Upload University ID Card"
+                    folder="/university-cards/"
+                    variant="light" // Your form has a dark theme
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -179,7 +188,15 @@ const BookForm = ({
               <FormItem className="flex flex-col gap-1">
                 <FormLabel className="text-base font-normal text-dark-500">Book video</FormLabel>
                 <FormControl>
-                      {/* File Upload */}
+                <FileUpload
+                  type="video"
+                  accept="video/mp4, video/quicktime"
+                  placeholder="Upload a course trailer"
+                  folder="/course-trailers/"
+                  variant="light"
+                  onFileChange={field.onChange}
+                  value={field.value}
+                />
                 </FormControl>
                 <FormMessage />
               </FormItem>
