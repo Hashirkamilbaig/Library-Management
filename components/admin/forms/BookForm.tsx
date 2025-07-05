@@ -24,6 +24,7 @@ import ImageUpload from "@/components/FileUpload"
 import { Textarea } from "@/components/ui/textarea"
 import FileUpload from "@/components/FileUpload"
 import ColorPicker from "../ColorPicker"
+import { createBook } from "@/lib/admin/actions/book"
 
 
 
@@ -48,7 +49,7 @@ const BookForm = ({
       rating:1,
       totalCopies:1,
       coverUrl:"",
-      coverColor:"",
+      coverColor: "#000000",
       videoUrl:"",
       summary:"",
 
@@ -58,6 +59,14 @@ const BookForm = ({
   // 2. Define a submit handler.
   const onSubmit = async(values: z.infer<typeof bookSchema>) => {
     console.log("Form submitted successfully:", values);
+    const result = await createBook(values);
+
+    if(result.success){
+      toast.success("Book Created Successfully! Redirecting...");
+      router.push(`/admin/books/${result.data.id}`);
+    }else{
+      toast.success("Error Creating Book!");
+    }
   };
 
   return (
@@ -146,7 +155,7 @@ const BookForm = ({
                     type="image"
                     accept="image/png, image/jpeg, image/webp"
                     placeholder="Upload University ID Card"
-                    folder="/university-cards/"
+                    folder="/book-cover/"
                     variant="light" // Your form has a dark theme
                   />
                 </FormControl>

@@ -32,21 +32,19 @@ export const signInSchema = z.object({
 });
 
 export const bookSchema = z.object({
-  title: z.string().trim().min(2).max(100),
+  title: z.string().trim().min(2).max(255), // Match varchar(255)
   description: z.string().trim().min(10).max(1000),
-  author: z.string().trim().min(2).max(100),
+  author: z.string().trim().min(2).max(255), // Match varchar(255)
   genre: z.string().trim().min(2).max(50),
   rating: z.coerce.number().min(1).max(5),
   totalCopies: z.coerce.number().int().positive().lte(10000),
-  coverUrl: z.string().nonempty(),
+  coverUrl: z.string().min(1, "Cover image is required"),
+  // Fixed: Make coverColor required to match database schema
   coverColor: z.string()
-  .trim()
-  // This regex now requires the string to START WITH '#'
-  .regex(/^#[0-9A-F]{6}$/i, "Must be a valid hex color like #FFFFFF") 
-  // This makes the field not required
-  .optional()
-  // This allows the value to be an empty string (its default state)
-  .or(z.literal('')),
-  videoUrl: z.string().nonempty(),
-  summary: z.string().trim().min(10),
+    .trim()
+    .min(1, "Cover color is required")
+    .regex(/^#[0-9A-F]{6}$/i, "Must be a valid hex color like #FFFFFF"),
+  videoUrl: z.string().min(1, "Video is required"),
+  // Fixed: Changed to match database varchar constraint
+  summary: z.string().trim().min(10).max(500), // Reasonable limit for varchar
 });

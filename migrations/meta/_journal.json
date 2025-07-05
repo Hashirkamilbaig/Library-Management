@@ -8,6 +8,13 @@
       "when": 1742689153839,
       "tag": "0000_clever_power_pack",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1751755447433,
+      "tag": "0001_nappy_rumiko_fujikawa",
+      "breakpoints": true
     }
   ]
 }
