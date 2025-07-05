@@ -14,10 +14,10 @@ const Sidebar = ({session} : {session:Session}) => {
   return (
     <div className='admin-sidebar'>
       <div>
-        <div className='logo'>
+        <Link href="/" className='logo'>
           <Image src="/icons/admin/logo.svg" alt='logo' height={37} width={37}/>
           <h1>BookWise</h1>
-        </div>
+        </Link>
         
         <div className='mt-10 flex flex-col gap-5'>
           {adminSideBarLinks.map((link) => {

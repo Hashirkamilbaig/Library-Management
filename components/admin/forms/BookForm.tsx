@@ -41,12 +41,11 @@ const BookForm = ({
   const form = useForm<z.infer<typeof bookSchema>>({
     resolver: zodResolver(bookSchema),
     defaultValues: {
-      
       title:"",
       description:"",
       author:"",
       genre:"",
-      rating:"",
+      rating:1,
       totalCopies:1,
       coverUrl:"",
       coverColor:"",
@@ -57,7 +56,9 @@ const BookForm = ({
   });
 
   // 2. Define a submit handler.
-  const onSubmit = async(values: z.infer<typeof bookSchema>) => {};
+  const onSubmit = async(values: z.infer<typeof bookSchema>) => {
+    console.log("Form submitted successfully:", values);
+  };
 
   return (
     
