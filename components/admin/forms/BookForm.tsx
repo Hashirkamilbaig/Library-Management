@@ -155,7 +155,7 @@ const BookForm = ({
                     type="image"
                     accept="image/png, image/jpeg, image/webp"
                     placeholder="Upload University ID Card"
-                    folder="/book-cover/"
+                    folder="/books/covers/"
                     variant="light" // Your form has a dark theme
                   />
                 </FormControl>
@@ -203,7 +203,7 @@ const BookForm = ({
                   type="video"
                   accept="video/mp4, video/quicktime"
                   placeholder="Upload a course trailer"
-                  folder="/course-trailers/"
+                  folder="/books/videos/"
                   variant="light"
                   onFileChange={field.onChange}
                   value={field.value}
