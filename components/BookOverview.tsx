@@ -14,7 +14,7 @@ const BookOverview = ({
   coverColor,
   coverUrl,
 }: Book) => {
-  console.log(coverUrl);
+  //console.log(coverUrl);
   return (
     <section className="book-overview">
       <div className="flex flex-1 flex-col gap-5">
