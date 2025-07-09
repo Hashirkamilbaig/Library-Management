@@ -14,7 +14,7 @@ const Home = async () =>{
   //console.log(JSON.stringify(result, null, 2));
   return (
     <>
-      <BookOverview {...latestBooks[0]} />
+      <BookOverview userId={session?.user?.id as string} {...latestBooks[0]} />
   
       <BookList
         title="Latest Books"

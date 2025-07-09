@@ -15,6 +15,13 @@
       "when": 1751755447433,
       "tag": "0001_nappy_rumiko_fujikawa",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1752101801970,
+      "tag": "0002_reflective_vengeance",
+      "breakpoints": true
     }
   ]
 }
