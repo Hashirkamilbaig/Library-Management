@@ -21,7 +21,7 @@ const BorrowBook = ({userId, bookId, borrowingEligibility : {isEligible, message
   const [borrowing, setBorrowing] = useState(false);
 
   const handleBorrow = async () => {
-    if(isEligible){
+    if(!isEligible){
       toast.error(message);
     }
     setBorrowing(true);
