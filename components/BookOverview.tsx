@@ -1,16 +1,14 @@
 import React from "react";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
 import BookCover from "@/components/BookCover";
-import BorrowBook from "./BorrowBook";
+import BorrowBook from "@/components/BorrowBook";
 import { db } from "@/database/drizzle";
 import { users } from "@/database/schema";
 import { eq } from "drizzle-orm";
 
 interface Props extends Book {
-  userId: string
+  userId: string;
 }
-
 const BookOverview = async ({
   title,
   author,
@@ -22,19 +20,21 @@ const BookOverview = async ({
   coverColor,
   coverUrl,
   id,
-  userId
+  userId,
 }: Props) => {
-  //console.log(coverUrl);
-
-  const [user] = await db.select().from(users).where(eq(users.id, userId)).limit(1);
-
+  const [user] = await db
+    .select()
+    .from(users)
+    .where(eq(users.id, userId))
+    .limit(1);
 
   const borrowingEligibility = {
-    isEligible: availableCopies > 0 && user.status === 'APPROVED',
+    isEligible: availableCopies > 0 && user?.status === "APPROVED",
     message:
-      availableCopies<=0 ? "Book is not available" : "You are not eligible to borrow this book"
-  }
-
+      availableCopies <= 0
+        ? "Book is not available"
+        : "You are not eligible to borrow this book",
+  };
   return (
     <section className="book-overview">
       <div className="flex flex-1 flex-col gap-5">
@@ -68,7 +68,13 @@ const BookOverview = async ({
 
         <p className="book-description">{description}</p>
 
-        {!user && <BorrowBook bookId={id} userId={userId} borrowingEligibility={borrowingEligibility} />}
+        {user && (
+          <BorrowBook
+            bookId={id}
+            userId={userId}
+            borrowingEligibility={borrowingEligibility}
+          />
+        )}
       </div>
 
       <div className="relative flex flex-1 justify-center">
@@ -81,7 +87,11 @@ const BookOverview = async ({
           />
 
           <div className="absolute left-16 top-10 rotate-12 opacity-40 max-sm:hidden">
-            <BookCover variant="wide" coverColor={coverColor} coverImage={coverUrl} />
+            <BookCover
+              variant="wide"
+              coverColor={coverColor}
+              coverImage={coverUrl}
+            />
           </div>
         </div>
       </div>
