@@ -1,7 +1,12 @@
-import { drizzle } from "drizzle-orm/neon-http";
-import { neon } from "@neondatabase/serverless";
-import config from "@/lib/config";
+// AFTER
+import postgres from 'postgres';
+import { drizzle } from 'drizzle-orm/postgres-js';
+import * as schema from './schema';
 
-const sql = neon(config.env.databaseUrl!);
+const connectionString = process.env.DATABASE_URL!;
 
-export const db = drizzle({ client: sql });
+// Disable prefetching and idle timeout in serverless environments
+const client = postgres(connectionString, { prepare: false });
+
+// This uses the postgres-js driver that DOES support transactions
+export const db = drizzle(client, { schema });
